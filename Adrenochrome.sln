@@ -1,0 +1,26 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 10.00
+# Visual Studio 2008
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Adrenochrome", "Adrenochrome\Adrenochrome.csproj", "{51E13CC9-A403-4EEC-9E1F-A0B5E1FC534E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AdrenochromeViewer", "AdrenochromeViewer\AdrenochromeViewer.csproj", "{C3C8D4B0-879E-4701-AF81-70936FA82F0C}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{51E13CC9-A403-4EEC-9E1F-A0B5E1FC534E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{51E13CC9-A403-4EEC-9E1F-A0B5E1FC534E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{51E13CC9-A403-4EEC-9E1F-A0B5E1FC534E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{51E13CC9-A403-4EEC-9E1F-A0B5E1FC534E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C3C8D4B0-879E-4701-AF81-70936FA82F0C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C3C8D4B0-879E-4701-AF81-70936FA82F0C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C3C8D4B0-879E-4701-AF81-70936FA82F0C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C3C8D4B0-879E-4701-AF81-70936FA82F0C}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
