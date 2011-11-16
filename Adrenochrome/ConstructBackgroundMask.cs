@@ -1,10 +1,14 @@
-﻿using System.Drawing;
+﻿using System;
+using System.Drawing;
 using System.Drawing.Imaging;
 
 namespace Adrenochrome
 {
+
     public static class ConstructBackgroundMask
     {
+        private unsafe delegate void Softener(Pixel* pS, Pixel* pD, int width, int height);
+
         private const int X = 2;
         private const int Y = 2;
         private const int W = 20;
@@ -14,7 +18,7 @@ namespace Adrenochrome
             Bitmap source,
             int toleranceLo,
             int toleranceHi,
-            bool medianFilter,
+            int softenMethod,
             int smoothingRounds )
         {
             var bgColor = (Pixel) HistogramAndBgColor.FindBackgroundColor(source, X, Y, W, H);
@@ -74,11 +78,19 @@ namespace Adrenochrome
 
                     }
 
-                    var p1 = pResult;
-                    var p2 = pResult2;
-                    for (var i = rect.Height * rect.Width; i > 0; i--, p1++, p2++)
-                        *p2 = *p1;
-                    for (var i = smoothingRounds ; i > 0; i--)
+                    Softener softenAlpha;
+                    if ( softenMethod == 0 )
+                        softenAlpha = softenAlpha1;
+                    else
+                        softenAlpha = softenAlpha2;
+
+                    //var p1 = pResult;
+                    //var p2 = pResult2;
+                    //for (var i = rect.Height * rect.Width; i > 0; i--, p1++, p2++)
+                    //    *p2 = *p1;
+                    softenColor(pResult, pResult2, rect.Width, rect.Height);
+                    softenColor(pResult2, pResult, rect.Width, rect.Height);
+                    for (var i = smoothingRounds; i > 0; i--)
                     {
                         softenAlpha(pResult, pResult2, rect.Width, rect.Height);
                         softenAlpha(pResult2, pResult, rect.Width, rect.Height);
@@ -111,7 +123,29 @@ namespace Adrenochrome
             }
         }
 
-        private static unsafe void softenAlpha(Pixel* pS, Pixel* pD, int width, int height)
+        private static unsafe void softenColor(Pixel* pS, Pixel* pD, int width, int height)
+        {
+            pS += width + 1;
+            pD += width + 1;
+            for (var i = (height - 2)*width - 2; i > 0; i--, pS++, pD++)
+            {
+                pD->R = (byte) ((
+                                    pS[-width - 1].R + pS[-width].R + pS[-width + 1].R +
+                                    pS[-1].A + pS[0].R + pS[1].R +
+                                    pS[width - 1].R + pS[width].R + pS[width + 1].R + 5)/9);
+                pD->G = (byte) ((
+                                    pS[-width - 1].G + pS[-width].G + pS[-width + 1].G +
+                                    pS[-1].G + pS[0].G + pS[1].G +
+                                    pS[width - 1].G + pS[width].G + pS[width + 1].G + 5)/9);
+                pD->B = (byte) ((
+                                    pS[-width - 1].B + pS[-width].B + pS[-width + 1].B +
+                                    pS[-1].B + pS[0].B + pS[1].B +
+                                    pS[width - 1].B + pS[width].B + pS[width + 1].B + 5)/9);
+                pD->A = pS->A;
+            }
+        }
+
+        private static unsafe void softenAlpha1(Pixel* pS, Pixel* pD, int width, int height)
         {
             pS += width + 1;
             pD += width + 1;
@@ -120,8 +154,46 @@ namespace Adrenochrome
                 var v =
                     pS[-width - 1].A + pS[-width].A + pS[-width + 1].A +
                     pS[-1].A + pS[0].A + pS[1].A +
-                    pS[width - 1].A + pS[width].A + pS[width + 1].A;
+                    pS[width - 1].A + pS[width].A + pS[width + 1].A + 5;
                 v /= 9;
+                if (v < pD->A)
+                    pD->A = (byte) v;
+            }
+        }
+
+        private static unsafe void softenAlpha2(Pixel* pS, Pixel* pD, int width, int height)
+        {
+            var x01 = -2*width - 1;
+            var x02 = -2*width;
+            var x03 = -2*width + 1;
+
+            var x04 = -width - 2;
+            var x05 = -width - 1;
+            var x06 = -width;
+            var x07 = -width + 1;
+            var x08 = -width + 2;
+
+            var x09 = width - 2;
+            var x10 = width - 1;
+            var x11 = width;
+            var x12 = width + 1;
+            var x13 = width + 2;
+
+            var x14 = 2*width - 1;
+            var x15 = 2*width;
+            var x16 = 2*width + 1;
+
+            pS += 2*(width + 1);
+            pD += 2*(width + 1);
+            for (var i = (height - 4)*width - 4; i > 0; i--, pS++, pD++)
+            {
+                var v =
+                    pS[x01].A + pS[x02].A + pS[x03].A +
+                    pS[x04].A + pS[x05].A + pS[x06].A + pS[x07].A + pS[x08].A +
+                    pS[-2].A + pS[-1].A + pS[0].A + pS[1].A + pS[2].A +
+                    pS[x09].A + pS[x10].A + pS[x11].A + pS[x12].A + pS[x13].A +
+                    pS[x14].A + pS[x15].A + pS[x16].A;
+                v /= 21;
                 if (v < pD->A)
                     pD->A = (byte) v;
             }

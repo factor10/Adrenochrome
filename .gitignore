@@ -15,4 +15,3 @@ _ReSharper.*
 # Visual Studio Browse File
 .ncb
 *.dll
-!3pp/*/*.dll

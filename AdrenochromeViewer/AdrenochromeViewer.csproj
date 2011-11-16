@@ -69,6 +69,12 @@
     <Compile Include="FTool.designer.cs">
       <DependentUpon>FTool.cs</DependentUpon>
     </Compile>
+    <Compile Include="FX.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FX.Designer.cs">
+      <DependentUpon>FX.cs</DependentUpon>
+    </Compile>
     <Compile Include="JpegSaver.cs" />
     <Compile Include="OneView.cs" />
     <Compile Include="Program.cs" />
@@ -87,6 +93,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="FTool.resx">
       <DependentUpon>FTool.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FX.resx">
+      <DependentUpon>FX.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>

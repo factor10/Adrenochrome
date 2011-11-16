@@ -83,6 +83,16 @@ namespace AdrenochromeViewer
             }
         }
 
+        public Bitmap Foreground
+        {
+            get { return _bmpOrg; }
+        }
+
+        public Bitmap Background
+        {
+            get { return _bmpBack; }
+        }
+
         public void Blend()
         {
             if ( TheMask != null )
@@ -106,7 +116,7 @@ namespace AdrenochromeViewer
         public bool CreateMask(
             int toleranceLo,
             int toleranceHi,
-            bool medianFilter,
+            int smoothingMethod,
             int smoothingRounds,
             string foreground,
             string background)
@@ -128,7 +138,7 @@ namespace AdrenochromeViewer
                 _bmpOrg,
                 toleranceLo,
                 toleranceHi,
-                medianFilter,
+                smoothingMethod,
                 smoothingRounds);
             return true;
         }

@@ -6,7 +6,7 @@ namespace AdrenochromeViewer
     {
         public readonly int TrackTolLoValue;
         public readonly int TrackTolHiValue;
-        public readonly bool MedianFilter;
+        public readonly int SoftenMethod;
         public readonly int TrackSoftenValue;
 
         public readonly string Foreground;
@@ -23,16 +23,16 @@ namespace AdrenochromeViewer
             string background,
             int trackTolLoValue,
             int trackTolHiValue,
-            bool medianFilter,
+            int softenMethod,
             int trackSoftenValue)
         {
             Foreground = foreground;
             Background = background;
             TrackTolLoValue = trackTolLoValue;
             TrackTolHiValue = trackTolHiValue;
-            MedianFilter = medianFilter;
+            SoftenMethod = softenMethod;
             TrackSoftenValue = trackSoftenValue;
-            if (vd.CreateMask(TrackTolLoValue, TrackTolHiValue, MedianFilter, TrackSoftenValue, Foreground, Background))
+            if (vd.CreateMask(TrackTolLoValue, TrackTolHiValue, SoftenMethod, TrackSoftenValue, Foreground, Background))
             {
                 TheMask = vd.TheMask;
                 ConstructBackgroundMask.CalculatePercentageSpread(TheMask, out ForegroundPercentage, out BackgroundPercentage);
@@ -41,11 +41,11 @@ namespace AdrenochromeViewer
 
         public override string ToString()
         {
-            return string.Format("{0} / {1} / {2} / {3}",
+            return string.Format("Tol:{0}/{1} / Soft:{2}/{3}",
                 TrackTolLoValue,
                 TrackTolHiValue,
-                TrackSoftenValue,
-                MedianFilter ? "J" : "N");
+                SoftenMethod+1,
+                TrackSoftenValue);
         }
 
         public override int GetHashCode()
@@ -59,7 +59,7 @@ namespace AdrenochromeViewer
             return other != null &&
                 TrackTolLoValue == other.TrackTolLoValue &&
                 TrackTolHiValue == other.TrackTolHiValue &&
-                MedianFilter == other.MedianFilter &&
+                SoftenMethod == other.SoftenMethod &&
                 TrackSoftenValue == other.TrackSoftenValue;
         }
 

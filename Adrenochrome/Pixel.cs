@@ -1,32 +1,33 @@
 ﻿using System;
 using System.Drawing;
+using System.Drawing.Imaging;
 
 namespace Adrenochrome
 {
-	public struct Pixel
-	{
-		public byte B;
-		public byte G;
-		public byte R;
-		public byte A;
+    public struct Pixel
+    {
+        public byte B;
+        public byte G;
+        public byte R;
+        public byte A;
 
-		public Pixel( int a, int r, int g, int b )
-		{
-			A = (byte)a;
-			R = (byte)r;
-			G = (byte)g;
-			B = (byte)b;
-		}
+        public Pixel(int a, int r, int g, int b)
+        {
+            A = (byte) a;
+            R = (byte) r;
+            G = (byte) g;
+            B = (byte) b;
+        }
 
-		public static implicit operator Color( Pixel rhs )
-		{
-			return Color.FromArgb( rhs.A, rhs.R, rhs.G, rhs.B );
-		}
+        public static implicit operator Color(Pixel rhs)
+        {
+            return Color.FromArgb(rhs.A, rhs.R, rhs.G, rhs.B);
+        }
 
-		public static implicit operator Pixel( Color rhs )
-		{
-			return new Pixel( rhs.A, rhs.R, rhs.G, rhs.B );
-		}
+        public static implicit operator Pixel(Color rhs)
+        {
+            return new Pixel(rhs.A, rhs.R, rhs.G, rhs.B);
+        }
 
         public YCbCr YCbCr()
         {
@@ -34,7 +35,23 @@ namespace Adrenochrome
                 (int) Math.Round(128 + -0.168736*R - 0.331264*G + 0.5*B),
                 (int) Math.Round(128 + 0.5*R - 0.418688*G - 0.081312*B));
         }
-	}
+
+        public static int Size(Bitmap bmp)
+        {
+            switch (bmp.PixelFormat)
+            {
+                case PixelFormat.Format32bppArgb:
+                case PixelFormat.Format32bppPArgb:
+                case PixelFormat.Format32bppRgb:
+                    return 4;
+                case PixelFormat.Format24bppRgb:
+                    return 3;
+                default:
+                    return 0;
+            }
+        }
+
+    }
 
     public struct YCbCr
     {

@@ -33,8 +33,8 @@ namespace AdrenochromeViewer
             foreach ( var te in blender.BlendTable )
             {
                 bc1[i] = (byte)Math.Round(te.Mask * 255);
-                bc2[i] = (byte)Math.Round(te.SquareMask * 255);
-                bc3[i] = (byte)Math.Round(te.SquareRoot * 255);
+                bc2[i] = (byte)Math.Round(te.GreenExtract * 255);
+                bc3[i] = (byte)Math.Round(te.Foreground * 255);
                 i++;
             }
             c1.Curve = bc1;
@@ -43,7 +43,7 @@ namespace AdrenochromeViewer
 
             for ( var j = 0 ; j <= _x.GetUpperBound(0) ; j++ )
             {
-                _x[j] = new [] { bc1, bc2, bc3 };
+                _x[j] = new[] { (byte[])bc1.Clone(), (byte[])bc2.Clone(), (byte[])bc3.Clone() };
                 var btn = new RadioButton
                               {
                                   Appearance = Appearance.Button,
@@ -106,6 +106,21 @@ namespace AdrenochromeViewer
 
             if ( CurvesChanged != null )
                 CurvesChanged(this, bc1, bc2, bc3);
+        }
+
+        private void btnApply_Click(object sender, EventArgs e)
+        {
+            var z = _x[_checkedButtonIndex];
+            var bend1 = (double) numBendBlend.Value / 10;
+            var bend2 = (double)numBendGreen.Value / 10;
+            for (var i = 0; i < 256; i++)
+            {
+                var te = new Blender.TableEntry(i, (int)numKnee.Value, bend1, bend2);
+                z[0][i] = (byte)Math.Round(te.Mask * 255);
+                z[1][i] = (byte)Math.Round(te.GreenExtract * 255);
+                z[2][i] = (byte)Math.Round(te.Foreground * 255);
+            }
+            btnClick(_checkedButtonIndex);
         }
 
     }

@@ -12,7 +12,8 @@ namespace AdrenochromeViewer
         public FPortLow()
         {
             InitializeComponent();
-            _bmp = new Bitmap(256, 384);
+            _bmp = new Bitmap(ClientSize.Width, ClientSize.Height);
+            Text = string.Format("{0}x{1}", ClientSize.Width, ClientSize.Height);
             using ( var g = Graphics.FromImage(_bmp))
                 g.Clear( Color.Black );
         }

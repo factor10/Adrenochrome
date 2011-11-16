@@ -33,9 +33,7 @@
             this.trackTolHi = new System.Windows.Forms.TrackBar();
             this.label1 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
-            this.label3 = new System.Windows.Forms.Label();
             this.trackSoften = new System.Windows.Forms.TrackBar();
-            this.chkMedian = new System.Windows.Forms.CheckBox();
             this.label4 = new System.Windows.Forms.Label();
             this.cboForeground = new System.Windows.Forms.ComboBox();
             this.cboBackground = new System.Windows.Forms.ComboBox();
@@ -46,6 +44,9 @@
             this.lstHistory = new System.Windows.Forms.ListBox();
             this.btnSaveAs = new System.Windows.Forms.Button();
             this.chkBlender = new System.Windows.Forms.CheckBox();
+            this.button1 = new System.Windows.Forms.Button();
+            this.optSoft1 = new System.Windows.Forms.RadioButton();
+            this.optSoft2 = new System.Windows.Forms.RadioButton();
             ((System.ComponentModel.ISupportInitialize)(this.trackTolLo)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.trackTolHi)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.trackSoften)).BeginInit();
@@ -57,7 +58,7 @@
             this.btnApply.Name = "btnApply";
             this.btnApply.Size = new System.Drawing.Size(82, 23);
             this.btnApply.TabIndex = 7;
-            this.btnApply.Text = "Verkställ";
+            this.btnApply.Text = "&Verkställ";
             this.btnApply.UseVisualStyleBackColor = true;
             this.btnApply.Click += new System.EventHandler(this.btnApply_Click);
             // 
@@ -70,7 +71,7 @@
             this.trackTolLo.Size = new System.Drawing.Size(274, 45);
             this.trackTolLo.TabIndex = 5;
             this.trackTolLo.TickStyle = System.Windows.Forms.TickStyle.Both;
-            this.trackTolLo.Value = 7;
+            this.trackTolLo.Value = 2;
             // 
             // trackTolHi
             // 
@@ -81,7 +82,7 @@
             this.trackTolHi.Size = new System.Drawing.Size(274, 45);
             this.trackTolHi.TabIndex = 6;
             this.trackTolHi.TickStyle = System.Windows.Forms.TickStyle.Both;
-            this.trackTolHi.Value = 20;
+            this.trackTolHi.Value = 18;
             // 
             // label1
             // 
@@ -101,15 +102,6 @@
             this.label2.TabIndex = 9;
             this.label2.Text = "Tol hög";
             // 
-            // label3
-            // 
-            this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(12, 175);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(26, 13);
-            this.label3.TabIndex = 11;
-            this.label3.Text = "Soft";
-            // 
             // trackSoften
             // 
             this.trackSoften.LargeChange = 1;
@@ -119,18 +111,7 @@
             this.trackSoften.Size = new System.Drawing.Size(274, 45);
             this.trackSoften.TabIndex = 10;
             this.trackSoften.TickStyle = System.Windows.Forms.TickStyle.Both;
-            this.trackSoften.Value = 8;
-            // 
-            // chkMedian
-            // 
-            this.chkMedian.AutoSize = true;
-            this.chkMedian.Location = new System.Drawing.Point(177, 213);
-            this.chkMedian.Name = "chkMedian";
-            this.chkMedian.Size = new System.Drawing.Size(80, 17);
-            this.chkMedian.TabIndex = 12;
-            this.chkMedian.Text = "Medianfilter";
-            this.chkMedian.UseVisualStyleBackColor = true;
-            this.chkMedian.Visible = false;
+            this.trackSoften.Value = 10;
             // 
             // label4
             // 
@@ -217,7 +198,7 @@
             this.btnSaveAs.Name = "btnSaveAs";
             this.btnSaveAs.Size = new System.Drawing.Size(82, 23);
             this.btnSaveAs.TabIndex = 21;
-            this.btnSaveAs.Text = "Spara som...";
+            this.btnSaveAs.Text = "&Spara som...";
             this.btnSaveAs.UseVisualStyleBackColor = true;
             this.btnSaveAs.Click += new System.EventHandler(this.btnSaveAs_Click);
             // 
@@ -228,16 +209,52 @@
             this.chkBlender.Name = "chkBlender";
             this.chkBlender.Size = new System.Drawing.Size(80, 23);
             this.chkBlender.TabIndex = 22;
-            this.chkBlender.Text = "Blandare";
+            this.chkBlender.Text = "&Blandare";
             this.chkBlender.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             this.chkBlender.UseVisualStyleBackColor = true;
             this.chkBlender.CheckedChanged += new System.EventHandler(this.chkBlender_CheckedChanged);
+            // 
+            // button1
+            // 
+            this.button1.Location = new System.Drawing.Point(179, 271);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(80, 23);
+            this.button1.TabIndex = 23;
+            this.button1.Text = "button1";
+            this.button1.UseVisualStyleBackColor = true;
+            this.button1.Visible = false;
+            this.button1.Click += new System.EventHandler(this.button1_Click);
+            // 
+            // optSoft1
+            // 
+            this.optSoft1.AutoSize = true;
+            this.optSoft1.Location = new System.Drawing.Point(15, 162);
+            this.optSoft1.Name = "optSoft1";
+            this.optSoft1.Size = new System.Drawing.Size(53, 17);
+            this.optSoft1.TabIndex = 24;
+            this.optSoft1.Text = "Soft 1";
+            this.optSoft1.UseVisualStyleBackColor = true;
+            // 
+            // optSoft2
+            // 
+            this.optSoft2.AutoSize = true;
+            this.optSoft2.Checked = true;
+            this.optSoft2.Location = new System.Drawing.Point(15, 185);
+            this.optSoft2.Name = "optSoft2";
+            this.optSoft2.Size = new System.Drawing.Size(53, 17);
+            this.optSoft2.TabIndex = 25;
+            this.optSoft2.TabStop = true;
+            this.optSoft2.Text = "Soft 2";
+            this.optSoft2.UseVisualStyleBackColor = true;
             // 
             // FTool
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(354, 326);
+            this.Controls.Add(this.optSoft2);
+            this.Controls.Add(this.optSoft1);
+            this.Controls.Add(this.button1);
             this.Controls.Add(this.chkBlender);
             this.Controls.Add(this.btnSaveAs);
             this.Controls.Add(this.lblSpread);
@@ -248,8 +265,6 @@
             this.Controls.Add(this.label5);
             this.Controls.Add(this.cboForeground);
             this.Controls.Add(this.label4);
-            this.Controls.Add(this.chkMedian);
-            this.Controls.Add(this.label3);
             this.Controls.Add(this.trackSoften);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.label1);
@@ -274,9 +289,7 @@
         private System.Windows.Forms.TrackBar trackTolHi;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label label2;
-        private System.Windows.Forms.Label label3;
         private System.Windows.Forms.TrackBar trackSoften;
-        private System.Windows.Forms.CheckBox chkMedian;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.ComboBox cboForeground;
         private System.Windows.Forms.ComboBox cboBackground;
@@ -287,5 +300,8 @@
         private System.Windows.Forms.ListBox lstHistory;
         private System.Windows.Forms.Button btnSaveAs;
         private System.Windows.Forms.CheckBox chkBlender;
+        private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.RadioButton optSoft1;
+        private System.Windows.Forms.RadioButton optSoft2;
     }
 }

@@ -1,6 +1,6 @@
 ﻿namespace AdrenochromeViewer
 {
-    partial class FPortLow
+    partial class FX
     {
         /// <summary>
         /// Required designer variable.
@@ -30,16 +30,14 @@
         {
             this.SuspendLayout();
             // 
-            // FPortLow
+            // FX
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(384, 512);
-            this.ControlBox = false;
-            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedToolWindow;
-            this.Name = "FPortLow";
-            this.ShowInTaskbar = false;
-            this.Text = " ";
+            this.ClientSize = new System.Drawing.Size(284, 262);
+            this.Name = "FX";
+            this.Text = "FX";
+            this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
             this.ResumeLayout(false);
 
         }

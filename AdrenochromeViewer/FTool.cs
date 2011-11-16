@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Drawing;
+using System.Drawing.Imaging;
 using System.IO;
 using System.Windows.Forms;
 using Adrenochrome;
@@ -100,7 +101,7 @@ namespace AdrenochromeViewer
                 cboBackground.SelectedItem as string,
                  trackTolLo.Value,
                  trackTolHi.Value,
-                 chkMedian.Checked,
+                 optSoft1.Checked ? 0 : 1,
                  trackSoften.Value );
             lstHistory.Items.Insert(0, unit);
             lstHistory.SelectedIndex = 0;
@@ -131,25 +132,36 @@ namespace AdrenochromeViewer
                 view.ForegroundPercentage,
                 view.BackgroundPercentage,
                 q);
-            lblSpread.BackColor = q > 10 ? Color.Red : Color.LightGreen;
+            lblSpread.BackColor = q > 15 ? Color.Red : Color.LightGreen;
         }
 
         private void btnSaveAs_Click(object sender, EventArgs e)
         {
             if (_viewerData.Result == null)
                 return;
-            using ( var dlg = new SaveFileDialog())
+            using (var dlg = new SaveFileDialog())
             {
-                dlg.Filter = "Jpeg|*.jpg";
-                dlg.DefaultExt = ".jpg";
+                dlg.Filter = "Portable Network Graphics (*.png)|*.png|JPEG (*.jpg)|*.jpg";
+                dlg.DefaultExt = ".png";
                 if (dlg.ShowDialog(this) != DialogResult.OK)
                     return;
-                JpegSaver.saveWithDefaultCompression(
-                    dlg.FileName,
-                    _viewerData.Result);
+                switch (dlg.FilterIndex)
+                {
+                    case 1:
+                        using (var bmp = new Bitmap(_viewerData.Result.Width, _viewerData.Result.Height))
+                        {
+                            _viewerData.Blender.Execute(bmp, _viewerData.Foreground, _viewerData.TheMask);
+                            bmp.Save(dlg.FileName, ImageFormat.Png);
+                        }
+                        break;
+                    case 2:
+                        JpegSaver.saveWithDefaultCompression(
+                            dlg.FileName,
+                            _viewerData.Result);
+                        break;
+                }
             }
         }
-
 
         private void chkBlender_CheckedChanged(object sender, EventArgs e)
         {
@@ -174,8 +186,8 @@ namespace AdrenochromeViewer
                 te[i] = new Blender.TableEntry()
                 {
                     Mask = c1[i] / 255f,
-                    SquareMask = c2[i] / 255f,
-                    SquareRoot = c3[i] / 255f
+                    GreenExtract = c2[i] / 255f,
+                    Foreground = c3[i] / 255f
                 };
             _viewerData.Blend();
             (Owner as FMain).SetImage(_viewerData.Result);
@@ -184,6 +196,15 @@ namespace AdrenochromeViewer
         void blenderFormClosed(object sender, FormClosedEventArgs e)
         {
             chkBlender.Checked = false;
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            using (var bmp = new Bitmap(_viewerData.Result.Width, _viewerData.Result.Height))
+            {
+                _viewerData.Blender.Execute(bmp, _viewerData.Foreground, _viewerData.TheMask);
+                FX.showDialog(Owner, bmp, _viewerData.Background);
+            }
         }
 
     }
